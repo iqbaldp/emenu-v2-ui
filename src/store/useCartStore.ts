@@ -16,13 +16,13 @@ interface CartStore {
   getTotalPrice: () => number;
 }
 
-export const useCartStore = create(
+export const useCartStore = create<CartStore>()(
   persist(
-    (set, get): CartStore => ({
+    (set, get) => ({
       items: [],
 
       addItem: (product) => {
-        set((state: { items: CartItem[] }) => {
+        set((state) => {
           const existingItem = state.items.find(
             (item) => item.id === product.id
           );
@@ -44,7 +44,7 @@ export const useCartStore = create(
       },
 
       removeItem: (productId) => {
-        set((state: { items: CartItem[] }) => ({
+        set((state) => ({
           items: state.items.filter((item) => item.id !== productId),
         }));
       },
@@ -52,7 +52,7 @@ export const useCartStore = create(
       updateQuantity: (productId, quantity) => {
         if (quantity < 0) return;
 
-        set((state: { items: CartItem[] }) => ({
+        set((state) => ({
           items: state.items.map((item) =>
             item.id === productId ? { ...item, quantity } : item
           ),
@@ -63,12 +63,12 @@ export const useCartStore = create(
 
       getTotalItems: () => {
         const state = get();
-        return (state as { items: CartItem[] }).items.reduce((total, item) => total + item.quantity, 0);
+        return state.items.reduce((total, item) => total + item.quantity, 0);
       },
 
       getTotalPrice: () => {
         const state = get();
-        return (state as { items: CartItem[] }).items.reduce((total, item) => {
+        return state.items.reduce((total, item) => {
           const price = parseFloat(item.price.replace(/[^0-9.-]+/g, ""));
           return total + price * item.quantity;
         }, 0);

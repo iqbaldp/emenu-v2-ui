@@ -2,7 +2,6 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
 import { ProductModalProps } from "@/types/product";
 import { useCartStore } from "@/store/useCartStore";
 
