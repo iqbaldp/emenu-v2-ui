@@ -8,12 +8,11 @@ import DiscountBanner from '@/components/home/DiscountBanner';
 import CategorySection from '@/components/home/CategorySection';
 import ProductGrid from '@/components/home/ProductGrid';
 import Navigation from '@/components/home/Navigation';
+import { categories, products } from '@/data/mockData';
 
 export default function Home() {
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [filteredProducts, setFilteredProducts] = useState([]);
-
-  const { categories, products } = require('@/data/mockData');
+  const [activeCategory, setActiveCategory] = useState('makanan');
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
   useEffect(() => {
     const filtered = products.filter(product => 

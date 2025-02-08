@@ -1,5 +1,4 @@
 export const categories = [
-  { id: 'all', name: '🍽️ All' },
   { id: 'makanan', name: '🍜 Makanan' },
   { id: 'minuman', name: '🥤 Minuman' },
   { id: 'kopi', name: '☕ Kopi' },
