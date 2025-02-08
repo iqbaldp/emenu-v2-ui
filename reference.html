@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Menu - Angkotua</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23ff6b35'/%3E%3Ctext x='50' y='65' font-family='sans-serif' font-size='50' fill='white' text-anchor='middle'%3E🍽️%3C/text%3E%3C/svg%3E">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ff6b35;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .splash-logo {
+            font-size: 64px;
+            margin-bottom: 20px;
+            transform: scale(0);
+            animation: scaleIn 0.5s ease 0.3s forwards;
+        }
+
+        .splash-title {
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.5s ease 0.6s forwards;
+            margin-bottom: 30px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            opacity: 0;
+            animation: spin 1s ease-in-out infinite, fadeIn 0.5s ease 0.9s forwards;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .fade-out {
+            animation: fadeOut 0.5s ease forwards;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        body {
+            background-color: #faf0eb;
+            padding: 12px;
+        }
+
+        .container {
+            max-width: 405px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 30px;
+            padding: 20px;
+            padding-bottom: 80px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-title-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ff6b35;
+            border-radius: 8px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .table-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #ffffff;
+            color: #ff6b35;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            animation: tableIndicatorPop 0.5s ease-out;
+            transition: transform 0.3s ease;
+            z-index: 1;
+            border: 1px solid rgba(255, 107, 53, 0.2);
+        }
+
+        .table-indicator::before {
+            content: '🪑';
+            font-size: 18px;
+        }
+        .table-indicator:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes tableIndicatorPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .search-bar {
+            /* position: sticky; */
+            top: 0;
+            z-index: 100;
+            background-color: #f5f5f5;
+            border-radius: 15px;
+            padding: 12px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .categories {
+            /* position: sticky; */
+            top: 70px;
+            z-index: 99;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            padding: 10px 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .categories.scrolled {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .search-bar:focus-within {
+            transform: scale(1.02);
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.15);
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            width: 100%;
+            padding: 0 10px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar span {
+            transition: transform 0.3s ease;
+        }
+
+        .search-bar:focus-within span {
+            transform: rotate(-10deg) scale(1.1);
+            color: #ff6b35;
+        }
+
+        .discount-banner {
+            background-color: #fff5f0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .discount-banner:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(255, 107, 53, 0.15);
+        }
+
+        .discount-text {
+            color: #ff6b35;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .discount-text div:first-child {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .discount-text div:last-child {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .discount-image {
+            font-size: 48px;
+            margin-right: 10px;
+            transform: rotate(-10deg);
+            transition: transform 0.3s ease;
+        }
+
+        .discount-banner:hover .discount-image {
+            transform: rotate(0deg) scale(1.1);
+        }
+
+        .categories {
+            margin-bottom: 20px;
+        }
+
+        .categories-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .category-pills {
+            display: flex;
+            gap: 10px;
+            overflow-x: scroll;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-behavior: smooth;
+            white-space: nowrap;
+            flex-wrap: nowrap;
+            width: 100%;
+            padding-top: 3px;
+            -webkit-user-select: none;
+            user-select: none;
+            cursor: grab;
+            position: relative;
+            touch-action: pan-x;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .category-pills:active {
+            cursor: grabbing;
+        }
+
+        .category-pills::-webkit-scrollbar {
+            display: none;
+        }
+        .category-pill {
+            background-color: #ffe4d6;
+            color: #ff6b35;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .category-pill:hover {
+            transform: translateY(-2px);
+            background-color: #ff6b35;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 10px 0;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+            opacity: 1;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card:active {
+            transform: scale(0.98);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #2d3436;
+        }
+
+        .product-time {
+            color: #636e72;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .product-price {
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        .heart-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .heart-icon:hover {
+            transform: scale(1.15) rotate(5deg);
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-card.adding-to-cart {
+            animation: addToCart 0.5s ease-out forwards;
+        }
+
+        @keyframes addToCart {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(0.8) translateY(-20px);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0.2) translateY(100px);
+                opacity: 0;
+            }
+        }
+
+        .nav-item.cart-bump {
+            animation: cartBump 0.3s ease-out;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b35;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .cart-badge.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        @keyframes cartBump {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .product-card.adding-to-cart {
+            animation: addToCart 0.5s ease-out forwards;
+        }
+
+        @keyframes addToCart {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(0.8) translateY(-20px);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0.2) translateY(100px);
+                opacity: 0;
+            }
+        }
+
+        .nav-item.cart-bump {
+            animation: cartBump 0.3s ease-out;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b35;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .cart-badge.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        @keyframes cartBump {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .product-card.hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .heart-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .heart-icon:hover {
+            transform: scale(1.2);
+        }
+
+        .product-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .product-time {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 405px;
+            max-width: calc(100% - 40px);
+            background: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            border-radius: 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-item:hover {
+            color: #ff6b35;
+        }
+
+
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryPills = document.querySelector('.category-pills');
+            const productCards = document.querySelectorAll('.product-card');
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            const pills = document.querySelectorAll('.category-pill');
+            pills.forEach(pill => {
+                pill.addEventListener('click', () => {
+                    pills.forEach(p => p.classList.remove('active'));
+                    pill.classList.add('active');
+
+                    const category = pill.textContent.toLowerCase();
+                    filterProducts(category);
+                });
+            });
+
+            function filterProducts(category) {
+                const delay = 50;
+                productCards.forEach((card, index) => {
+                    const productCategory = card.getAttribute('data-category') || '';
+                    const shouldShow = category === 'all' || productCategory.includes(category);
+                    
+                    setTimeout(() => {
+                        if (shouldShow) {
+                            card.classList.remove('hidden');
+                            requestAnimationFrame(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'scale(1)';
+                            });
+                        } else {
+                            card.classList.add('hidden');
+                            card.style.opacity = '0';
+                            card.style.transform = 'scale(0.8)';
+                        }
+                    }, index * delay);
+                });
+            }
+
+            let cartCount = 0;
+            const cartNavItem = document.querySelector('.nav-item:nth-child(2)');
+            
+            const cartBadge = document.createElement('div');
+            cartBadge.className = 'cart-badge';
+            cartBadge.textContent = '0';
+            cartNavItem.appendChild(cartBadge);
+
+            productCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const rect = card.getBoundingClientRect();
+                    const floatingEl = card.cloneNode(true);
+                    floatingEl.style.position = 'fixed';
+                    floatingEl.style.top = rect.top + 'px';
+                    floatingEl.style.left = rect.left + 'px';
+                    floatingEl.style.width = rect.width + 'px';
+                    floatingEl.style.height = rect.height + 'px';
+                    floatingEl.style.margin = '0';
+                    floatingEl.style.zIndex = '1000';
+                    floatingEl.style.transition = 'all 0.5s ease';
+                    document.body.appendChild(floatingEl);
+
+                    const cartRect = cartNavItem.getBoundingClientRect();
+                    
+                    setTimeout(() => {
+                        floatingEl.style.transform = `translate(${cartRect.left - rect.left}px, ${cartRect.top - rect.top}px) scale(0.1)`;
+                        floatingEl.style.opacity = '0';
+                    }, 0);
+
+                    card.classList.add('adding-to-cart');
+                    
+                    setTimeout(() => {
+                        card.classList.remove('adding-to-cart');
+                        document.body.removeChild(floatingEl);
+                        
+                        cartCount++;
+                        cartBadge.textContent = cartCount;
+                        cartBadge.classList.add('show');
+                        
+                        cartNavItem.classList.add('cart-bump');
+                        setTimeout(() => {
+                            cartNavItem.classList.remove('cart-bump');
+                        }, 300);
+                    }, 500);
+                });
+            });
+
+            categoryPills.addEventListener('mousedown', (e) => {
+                isDown = true;
+                categoryPills.style.cursor = 'grabbing';
+                startX = e.pageX - categoryPills.offsetLeft;
+                scrollLeft = categoryPills.scrollLeft;
+            });
+
+            categoryPills.addEventListener('mouseleave', () => {
+                isDown = false;
+                categoryPills.style.cursor = 'grab';
+            });
+
+            categoryPills.addEventListener('mouseup', () => {
+                isDown = false;
+                categoryPills.style.cursor = 'grab';
+            });
+
+            categoryPills.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - categoryPills.offsetLeft;
+                const walk = (x - startX) * 2;
+                categoryPills.scrollLeft = scrollLeft - walk;
+            });
+
+            categoryPills.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].pageX - categoryPills.offsetLeft;
+                scrollLeft = categoryPills.scrollLeft;
+            });
+
+            categoryPills.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const x = e.touches[0].pageX - categoryPills.offsetLeft;
+                const walk = (x - startX) * 2;
+                categoryPills.scrollLeft = scrollLeft - walk;
+            });
+
+
+        });
+    </script>
+</head>
+<body>
+    <div class="splash-screen">
+        <div class="splash-logo">🍽️</div>
+        <div class="splash-title">Angkotua</div>
+        <div class="spinner"></div>
+    </div>
+    <div class="container">
+        <div class="header">
+            <div class="logo-title-container">
+                <div class="logo">🍽️</div>
+                <h1 class="title">Angkotua</h1>
+                <div class="table-indicator">Meja #1</div>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <span>🔍</span>
+            <input type="text" placeholder="Cari disini">
+        </div>
+
+        <div class="discount-banner">
+            <div class="discount-text">
+                <div>Paket Nasi Telur</div>
+                <div>25K</div>
+            </div>
+            <div class="discount-image">🍽️</div>
+        </div>
+
+        <div class="categories">
+            <div class="categories-title">Kategori</div>
+            <div class="category-pills">
+                <div class="category-pill">Spesial</div>
+                <div class="category-pill">Nasi</div>
+                <div class="category-pill">Mie</div>
+                <div class="category-pill">Gorengan</div>
+                <div class="category-pill">Sate</div>
+                <div class="category-pill">Kopi</div>
+            </div>
+        </div>
+
+        <div class="products-grid">
+            <div class="product-card" data-category="spesial nasi">
+                <img src="https://images.unsplash.com/photo-1546549032-9571cd6b27df?w=500" class="product-image" alt="Nasi Telur">
+                <div class="heart-icon">❤️</div>
+                <div class="product-title">Nasi Telur</div>
+                <div class="product-time">⭐ 4.5</div>
+                <div class="product-price">10K</div>
+            </div>
+            <div class="product-card" data-category="nasi">
+                <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=500" class="product-image" alt="Nasi Goreng">
+                <div class="heart-icon">❤️</div>
+                <div class="product-title">Nasi Goreng</div>
+                <div class="product-time">⭐ 4.8</div>
+                <div class="product-price">15K</div>
+            </div>
+            <div class="product-card" data-category="mie">
+                <img src="https://images.unsplash.com/photo-1612927601601-6638404737ce?w=500" class="product-image" alt="Mie Goreng">
+                <div class="heart-icon">❤️</div>
+                <div class="product-title">Mie Goreng</div>
+                <div class="product-time">⭐ 4.7</div>
+                <div class="product-price">10K</div>
+            </div>
+            <div class="product-card" data-category="mie">
+                <img src="https://images.unsplash.com/photo-1612927601601-6638404737ce?w=500" class="product-image" alt="Indomie Rebus">
+                <div class="heart-icon">❤️</div>
+                <div class="product-title">Indomie Rebus</div>
+                <div class="product-time">⭐ 4.9</div>
+                <div class="product-price">15K</div>
+            </div>
+            <div class="product-card" data-category="mie">
+                <img src="https://images.unsplash.com/photo-1612927601601-6638404737ce?w=500" class="product-image" alt="Indomie Goreng">
+                <div class="heart-icon">❤️</div>
+                <div class="product-title">Indomie Goreng</div>
+                <div class="product-time">⭐ 4.6</div>
+                <div class="product-price">15K</div>
+            </div>
+            <div class="product-card" data-category="gorengan">
+                <img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=500" class="product-image" alt="Kentang Goreng">
+                <div class="heart-icon">❤️</div>
+                <div class="product-title">Kentang Goreng</div>
+                <div class="product-time">⭐ 4.9</div>
+                <div class="product-price">10K</div>
+            </div>
+            <div class="product-card" data-category="kopi">
+                <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=500" class="product-image" alt="Es Teh">
+                <div class="heart-icon">❤️</div>
+                <div class="product-title">Es teh</div>
+                <div class="product-time">⭐ 4.8</div>
+                <div class="product-price">7K</div>
+            </div>
+            <div class="product-card" data-category="kopi">
+                <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=500" class="product-image" alt="Es Jeruk">
+                <div class="heart-icon">❤️</div>
+                <div class="product-title">Es Jeruk</div>
+                <div class="product-time">⭐ 5.0</div>
+                <div class="product-price">10K</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <div class="nav-item">🍽️ Menu</div>
+        <div class="nav-item">🛒 Cart</div>
+        <div class="nav-item">💳 Bill</div>
+    </div>
+</body>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const splashScreen = document.querySelector('.splash-screen');
+            setTimeout(() => {
+                splashScreen.classList.add('fade-out');
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                }, 500);
+            }, 3000);
+        });
+    </script>
+    <script src="script.js"></script>
+</html>
