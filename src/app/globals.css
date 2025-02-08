@@ -639,11 +639,21 @@ body {
   font-size: 19px;
   font-weight: 740;
   cursor: pointer;
-  transition: color 0.3s ease;
-  position: relative;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  color: #666;
+}
+
+.nav-item.active {
+  background-color: #ff6b35;
+  color: white;
+  font-weight: 600;
+  transform: translateY(-2px);
 }
 
 .nav-item:hover {
+  background-color: #ffe4d6;
   color: #ff6b35;
 }
 
@@ -995,8 +1005,16 @@ body {
   font-size: 19px;
   font-weight: 740;
   cursor: pointer;
-  transition: color 0.3s ease;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
   position: relative;
+}
+
+.nav-item.active {
+  background-color: #f3f4f6;
+  color: #000;
+  font-weight: 500;
 }
 
 .nav-item:hover {

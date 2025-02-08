@@ -7,7 +7,7 @@ import SearchBar from '@/components/home/SearchBar';
 import DiscountBanner from '@/components/home/DiscountBanner';
 import CategorySection from '@/components/home/CategorySection';
 import ProductGrid from '@/components/home/ProductGrid';
-import Navigation from '@/components/home/Navigation';
+import Navigation from '@/components/Navigation';
 import { categories, products } from '@/data/mockData';
 
 export default function Home() {

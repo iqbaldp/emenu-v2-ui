@@ -2,26 +2,15 @@
 
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-
-interface Product {
-  id: number;
-  title: string;
-  image: string;
-  rating: number;
-  price: string;
-  category: string;
-  mustTry: boolean;
-}
-
-interface ProductGridProps {
-  products: Product[];
-  activeCategory: string;
-}
+import ProductModal from './ProductModal';
+import { Product, ProductGridProps } from '@/types/product';
 
 export default function ProductGrid({ products, activeCategory }: ProductGridProps) {
   const [visibleProducts, setVisibleProducts] = useState<Product[]>([]);
   const [animatingProducts, setAnimatingProducts] = useState<number[]>([]);
   const [mounted, setMounted] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -57,6 +46,10 @@ export default function ProductGrid({ products, activeCategory }: ProductGridPro
           key={`${product.id}-${index}`} 
           className={`product-card ${animatingProducts.includes(product.id) ? 'hidden' : ''}`}
           data-category={product.category}
+          onClick={() => {
+            setSelectedProduct(product);
+            setIsModalOpen(true);
+          }}
           style={{
             opacity: 0,
             transform: 'translateY(20px) scale(0.95)',
@@ -77,6 +70,11 @@ export default function ProductGrid({ products, activeCategory }: ProductGridPro
           </div>
         </div>
       ))}
+      <ProductModal
+        product={selectedProduct}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }
