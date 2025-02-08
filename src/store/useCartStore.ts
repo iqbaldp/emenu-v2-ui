@@ -16,26 +16,6 @@ interface CartStore {
   getTotalPrice: () => number;
 }
 
-interface CartState {
-  items: Product[];
-  addItem: (product: Product) => void;
-  removeItem: (productId: number) => void;
-  clearCart: () => void;
-}
-
-export const useSimpleCartStore = create<CartState>((set) => ({
-  items: [],
-  addItem: (product) =>
-    set((state) => ({
-      items: [...state.items, product],
-    })),
-  removeItem: (productId) =>
-    set((state) => ({
-      items: state.items.filter((item) => item.id !== productId),
-    })),
-  clearCart: () => set({ items: [] }),
-}));
-
 export const useCartStore = create(
   persist(
     (set, get): CartStore => ({
