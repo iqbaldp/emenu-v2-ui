@@ -6,9 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navigation() {
   const pathname = usePathname();
-  const items = useCartStore((state: any) => state.items);
+  const items = useCartStore((state) => state.items);
   const totalItems = items.reduce(
-    (total: number, item: any) => total + item.quantity,
+    (total: number, item) => total + item.quantity,
     0
   );
 

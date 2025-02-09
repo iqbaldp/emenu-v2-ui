@@ -18,7 +18,7 @@ export default function ProductGrid({
   useEffect(() => {
     setMounted(true);
     setVisibleProducts(products);
-  }, []);
+  }, [products]);
 
   useEffect(() => {
     if (!mounted) return;

@@ -11,7 +11,7 @@ export default function ProductModal({
   isOpen,
   onClose,
 }: ProductModalProps) {
-  const addItem = useCartStore((state: any) => state.addItem);
+  const addItem = useCartStore((state) => state.addItem);
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = (newQuantity: number) => {
