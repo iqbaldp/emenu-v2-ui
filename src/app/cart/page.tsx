@@ -51,7 +51,7 @@ export default function CartPage() {
   const prices = calculatePrices();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
       <div className="container">
         <Header />
 
@@ -86,6 +86,6 @@ export default function CartPage() {
         </div>
       </div>
       <Navigation />
-    </div>
+    </>
   );
 }
