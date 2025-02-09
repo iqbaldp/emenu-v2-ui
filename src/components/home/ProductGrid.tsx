@@ -23,23 +23,21 @@ export default function ProductGrid({
   useEffect(() => {
     if (!mounted) return;
 
-    const updateVisibility = () => {
-      setAnimatingProducts(
-        visibleProducts
-          .filter((p) => p.category !== activeCategory)
-          .map((p) => p.id)
+    setAnimatingProducts(
+      visibleProducts
+        .filter((p) => p.category !== activeCategory)
+        .map((p) => p.id)
+    );
+
+    const timeoutId = setTimeout(() => {
+      const filteredProducts = products.filter(
+        (product) => product.category === activeCategory
       );
+      setVisibleProducts(filteredProducts);
+      setAnimatingProducts([]);
+    }, 400);
 
-      setTimeout(() => {
-        const filteredProducts = products.filter(
-          (product) => product.category === activeCategory
-        );
-        setVisibleProducts(filteredProducts);
-        setAnimatingProducts([]);
-      }, 300);
-    };
-
-    updateVisibility();
+    return () => clearTimeout(timeoutId);
   }, [activeCategory, products, mounted, visibleProducts]);
 
   if (!mounted) return null;
@@ -50,7 +48,7 @@ export default function ProductGrid({
         <div
           key={`${product.id}-${index}`}
           className={`product-card ${
-            animatingProducts.includes(product.id) ? "hidden" : ""
+            animatingProducts.includes(product.id) ? "fade-out" : ""
           }`}
           data-category={product.category}
           onClick={() => {
@@ -59,8 +57,10 @@ export default function ProductGrid({
           }}
           style={{
             opacity: 0,
-            transform: "translateY(20px) scale(0.95)",
-            animation: `fadeSlideIn 0.5s ease-out ${index * 0.1}s forwards`,
+            transform: "translateY(30px) scale(0.95)",
+            animation: `fadeSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${
+              index * 0.08
+            }s forwards`,
           }}
         >
           <Image
