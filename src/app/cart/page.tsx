@@ -32,8 +32,8 @@ export default function CartPage() {
 
   const calculatePrices = () => {
     const subtotal = getTotalPrice();
-    const serviceCharge = subtotal * 0.1; // 10% service charge
-    const tax = subtotal * 0.11; // 11% tax
+    const serviceCharge = subtotal * 0.1;
+    const tax = subtotal * 0.11;
     const total = subtotal + serviceCharge + tax;
 
     return {

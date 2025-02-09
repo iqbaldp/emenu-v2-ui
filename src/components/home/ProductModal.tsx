@@ -23,7 +23,9 @@ export default function ProductModal({
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (product) {
-      addItem({ ...product, quantity });
+      for (let i = 0; i < quantity; i++) {
+        addItem(product);
+      }
       setQuantity(1);
       onClose();
     }
