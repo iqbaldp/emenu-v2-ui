@@ -3,30 +3,26 @@
 import { useEffect, useState } from 'react';
 import { merchantConfig } from '@/config/merchant';
 
+let hasShownSplashScreen = false;
+
 export default function SplashScreen() {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(!hasShownSplashScreen);
   const [isMounted, setIsMounted] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
-  const [hasShownSplash, setHasShownSplash] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
-    const hasShown = localStorage.getItem('hasShownSplash');
-    
-    if (hasShown) {
-      setIsVisible(false);
-      return;
+    if (!hasShownSplashScreen) {
+      hasShownSplashScreen = true;
+      const timer = setTimeout(() => {
+        setFadeOut(true);
+        setTimeout(() => {
+          setIsVisible(false);
+        }, 500);
+      }, 3000);
+
+      return () => clearTimeout(timer);
     }
-
-    const timer = setTimeout(() => {
-      setFadeOut(true);
-      setTimeout(() => {
-        setIsVisible(false);
-        localStorage.setItem('hasShownSplash', 'true');
-      }, 500);
-    }, 3000);
-
-    return () => clearTimeout(timer);
   }, []);
 
   if (!isMounted) return null;
