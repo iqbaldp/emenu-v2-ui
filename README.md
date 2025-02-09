@@ -15,15 +15,15 @@ Digital menu system built with Next.js with interactive menu browsing, cart mana
 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0;">
   <div style="text-align: center;">
     <p><strong>Menu View</strong></p>
-    <img src="./public/screenshots/menu-view.png" alt="Menu Interface" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <img src="./public/screenshots/menu-view.png" alt="Menu Interface" style="height: 50%; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
   </div>
   <div style="text-align: center;">
     <p><strong>Cart Management</strong></p>
-    <img src="./public/screenshots/cart-view.png" alt="Cart Interface" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <img src="./public/screenshots/cart-view.png" alt="Cart Interface" style="height: 50%; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
   </div>
   <div style="text-align: center;">
     <p><strong>Bill Processing</strong></p>
-    <img src="./public/screenshots/bill-view.png" alt="Bill Interface" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <img src="./public/screenshots/bill-view.png" alt="Bill Interface" style="height: 50%; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
   </div>
 </div>
 
