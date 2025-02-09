@@ -12,14 +12,20 @@ Digital menu system built with Next.js with interactive menu browsing, cart mana
 
 ## Screenshots
 
-### Menu View
-![Menu Interface](./public/screenshots/menu-view.png)
-
-### Cart Management
-![Cart Interface](./public/screenshots/cart-view.png)
-
-### Bill Processing
-![Bill Interface](./public/screenshots/bill-view.png)
+<div style="display: flex; justify-content: space-between; gap: 20px; margin: 20px 0;">
+  <div style="flex: 1; text-align: center;">
+    <p><strong>Menu View</strong></p>
+    <img src="./public/screenshots/menu-view.png" alt="Menu Interface" style="max-height: 250px; width: auto; object-fit: cover;">
+  </div>
+  <div style="flex: 1; text-align: center;">
+    <p><strong>Cart Management</strong></p>
+    <img src="./public/screenshots/cart-view.png" alt="Cart Interface" style="max-height: 250px; width: auto; object-fit: cover;">
+  </div>
+  <div style="flex: 1; text-align: center;">
+    <p><strong>Bill Processing</strong></p>
+    <img src="./public/screenshots/bill-view.png" alt="Bill Interface" style="max-height: 250px; width: auto; object-fit: cover;">
+  </div>
+</div>
 
 ## Technology Stack
 
