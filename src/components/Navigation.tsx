@@ -51,7 +51,12 @@ export default function Navigation() {
             )}
           </AnimatePresence>
         </Link>
-        <Link href="/bill" className="nav-item">
+        <Link
+          href="/bill"
+          className={`nav-item relative ${
+            pathname === "/bill" ? "active" : ""
+          }`}
+        >
           💳 Bill
         </Link>
       </div>

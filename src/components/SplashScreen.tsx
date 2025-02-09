@@ -19,7 +19,7 @@ export default function SplashScreen() {
         setTimeout(() => {
           setIsVisible(false);
         }, 500);
-      }, 3000);
+      }, 1000);
 
       return () => clearTimeout(timer);
     }
