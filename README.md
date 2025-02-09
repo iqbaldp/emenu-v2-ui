@@ -14,15 +14,12 @@ Digital menu system built with Next.js with interactive menu browsing, cart mana
 
 ### Menu View
 ![Menu Interface](./public/screenshots/menu-view.png)
-*Browse through our beautifully designed menu with detailed item descriptions*
 
 ### Cart Management
 ![Cart Interface](./public/screenshots/cart-view.png)
-*Easily manage your order with our intuitive cart interface*
 
 ### Bill Processing
 ![Bill Interface](./public/screenshots/bill-view.png)
-*Review your order and process payment seamlessly*
 
 ## Technology Stack
 
