@@ -51,11 +51,11 @@ export default function CartPage() {
   const prices = calculatePrices();
 
   return (
-    <>
-      <div className="container">
+    <div className="min-h-screen flex flex-col">
+      <div className="container flex-1">
         <Header />
 
-        <div className="max-w-3xl mx-auto px-2">
+        <div className="max-w-3xl mx-auto px-2 flex flex-col min-h-[calc(100vh-180px)]">
           <div className="flex justify-between items-center mb-4 mt-10">
             <h2 className="text-2xl font-semibold text-gray-800">Pesanan</h2>
             <button
@@ -70,7 +70,7 @@ export default function CartPage() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="divide-y divide-gray-100"
+            className="divide-y divide-gray-100 flex-1"
           >
             {items.map((item) => (
               <CartItem
@@ -86,6 +86,6 @@ export default function CartPage() {
         </div>
       </div>
       <Navigation />
-    </>
+    </div>
   );
 }

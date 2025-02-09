@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   title: merchantConfig.title,
   description: merchantConfig.description,
   icons: {
-    icon: "/favicon.ico"
-  }
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -28,7 +28,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} font-sans`}>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans`}>
+        {children}
+      </body>
     </html>
   );
 }
