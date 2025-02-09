@@ -12,18 +12,18 @@ Digital menu system built with Next.js with interactive menu browsing, cart mana
 
 ## Screenshots
 
-<div style="display: flex; justify-content: space-between; gap: 20px; margin: 20px 0;">
-  <div style="flex: 1; text-align: center;">
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0;">
+  <div style="text-align: center;">
     <p><strong>Menu View</strong></p>
-    <img src="./public/screenshots/menu-view.png" alt="Menu Interface" style="max-height: 250px; width: auto; object-fit: cover;">
+    <img src="./public/screenshots/menu-view.png" alt="Menu Interface" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
   </div>
-  <div style="flex: 1; text-align: center;">
+  <div style="text-align: center;">
     <p><strong>Cart Management</strong></p>
-    <img src="./public/screenshots/cart-view.png" alt="Cart Interface" style="max-height: 250px; width: auto; object-fit: cover;">
+    <img src="./public/screenshots/cart-view.png" alt="Cart Interface" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
   </div>
-  <div style="flex: 1; text-align: center;">
+  <div style="text-align: center;">
     <p><strong>Bill Processing</strong></p>
-    <img src="./public/screenshots/bill-view.png" alt="Bill Interface" style="max-height: 250px; width: auto; object-fit: cover;">
+    <img src="./public/screenshots/bill-view.png" alt="Bill Interface" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
   </div>
 </div>
 
