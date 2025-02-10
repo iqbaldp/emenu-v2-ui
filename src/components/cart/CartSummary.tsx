@@ -24,7 +24,7 @@ export default function CartSummary({
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
 
-  const handlePaymentConfirm = async (paymentId: string) => {
+  const handlePaymentConfirm = async () => {
     setIsProcessing(true);
     setOrder(items, subtotal, serviceCharge, tax, total);
     await new Promise((resolve) => setTimeout(resolve, 5000));
