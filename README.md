@@ -1,14 +1,6 @@
 # E-Menu UI v2
 
-Digital menu system built with Next.js with interactive menu browsing, cart management, and bill processing.
-
-## Features
-
-- 🍽️ **Interactive Menu**: Browse digital menu
-- 🛒 **Cart Management**: Add/remove items with real-time quantity updates
-- 💳 **Bill Processing**: View order summary and process payments (in development)
-- 📱 **Responsive Design**: Optimized for both mobile and desktop views
-- ⚡ **Fast Performance**: Built with Next.js for optimal loading speeds
+Digital menu for Restaurant & F&B
 
 ## Screenshots
 
