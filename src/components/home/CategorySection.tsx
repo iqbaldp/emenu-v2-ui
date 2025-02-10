@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 interface Category {
   id: string;
@@ -11,7 +11,11 @@ interface CategorySectionProps {
   onCategoryChange: (categoryId: string) => void;
 }
 
-export default function CategorySection({ categories, activeCategory, onCategoryChange }: CategorySectionProps) {
+export default function CategorySection({
+  categories,
+  activeCategory,
+  onCategoryChange,
+}: CategorySectionProps) {
   return (
     <div className="categories">
       <div className="categories-title">Kategori</div>
@@ -19,7 +23,7 @@ export default function CategorySection({ categories, activeCategory, onCategory
         {categories.map((category) => (
           <div
             key={category.id}
-            className={`category-pill ${activeCategory === category.id ? 'active' : ''}`}
+            className={`category-pill ${activeCategory === category.id ? "active" : ""}`}
             onClick={() => onCategoryChange(category.id)}
           >
             {category.name}

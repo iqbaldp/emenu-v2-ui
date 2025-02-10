@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { merchantConfig } from '@/config/merchant';
+import { useEffect, useState } from "react";
+import { merchantConfig } from "@/config/merchant";
 
 let hasShownSplashScreen = false;
 
@@ -29,7 +29,7 @@ export default function SplashScreen() {
   if (!isVisible) return null;
 
   return (
-    <div className={`splash-screen ${fadeOut ? 'fade-out' : ''}`}>
+    <div className={`splash-screen ${fadeOut ? "fade-out" : ""}`}>
       <div className="splash-logo">{merchantConfig.logo}</div>
       <div className="splash-title">{merchantConfig.name}</div>
       <div className="spinner"></div>

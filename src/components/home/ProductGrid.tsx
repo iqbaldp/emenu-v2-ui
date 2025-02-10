@@ -26,12 +26,12 @@ export default function ProductGrid({
     setAnimatingProducts(
       visibleProducts
         .filter((p) => p.category !== activeCategory)
-        .map((p) => p.id)
+        .map((p) => p.id),
     );
 
     const timeoutId = setTimeout(() => {
       const filteredProducts = products.filter(
-        (product) => product.category === activeCategory
+        (product) => product.category === activeCategory,
       );
       setVisibleProducts(filteredProducts);
       setAnimatingProducts([]);

@@ -33,12 +33,7 @@ export default function CartItem({
       <div className="flex gap-1 pt-4">
         <div className="flex flex-col items-center gap-1">
           <div className="relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-lg">
-            <Image
-              src={image}
-              alt={title}
-              fill
-              className="object-cover"
-            />
+            <Image src={image} alt={title} fill className="object-cover" />
           </div>
           <div className="flex items-center gap-1 mt-1">
             <button
@@ -62,12 +57,8 @@ export default function CartItem({
         <div className="flex-grow min-w-0">
           <div className="flex justify-between items-start mb-1">
             <div>
-              <h3 className="font-medium text-gray-800 text-l mb-1">
-                {title}
-              </h3>
-              <div className="text-gray-500 text-sm">
-                {price}
-              </div>
+              <h3 className="font-medium text-gray-800 text-l mb-1">{title}</h3>
+              <div className="text-gray-500 text-sm">{price}</div>
             </div>
             <button
               onClick={() => onRemove(id)}
@@ -78,7 +69,9 @@ export default function CartItem({
           </div>
           <div className="text-[#ff6b35] font-bold text-l mt-1">
             Rp.{" "}
-            {(parseFloat(price.replace(/[^0-9.-]+/g, "")) * quantity).toFixed(2)}
+            {(parseFloat(price.replace(/[^0-9.-]+/g, "")) * quantity).toFixed(
+              2,
+            )}
           </div>
         </div>
       </div>

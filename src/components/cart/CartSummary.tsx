@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import PaymentMethodModal from "./PaymentMethodModal";
 
 interface CartSummaryProps {
@@ -17,8 +18,15 @@ export default function CartSummary({
 }: CartSummaryProps) {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
-  const handlePaymentConfirm = (paymentId: string) => {
-    console.log(`Processing payment with ${paymentId}`);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const router = useRouter();
+
+  const handlePaymentConfirm = async (paymentId: string) => {
+    setIsProcessing(true);
+
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+
+    router.push("/bill");
   };
 
   return (
@@ -60,6 +68,31 @@ export default function CartSummary({
           onClose={() => setIsPaymentModalOpen(false)}
           onConfirm={handlePaymentConfirm}
         />
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isProcessing && (
+          <motion.div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            >
+              <div className="w-16 h-16 border-4 border-[#ff6b35] border-t-transparent rounded-full animate-spin mb-4" />
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                Sedang Memproses Pembayaran
+              </h3>
+              <p className="text-gray-600">Mohon tunggu sebentar ya...</p>
+            </motion.div>
+          </motion.div>
+        )}
       </AnimatePresence>
     </div>
   );

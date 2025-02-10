@@ -9,7 +9,7 @@ export default function Navigation() {
   const items = useCartStore((state) => state.items);
   const totalItems = items.reduce(
     (total: number, item) => total + item.quantity,
-    0
+    0,
   );
 
   return (

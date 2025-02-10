@@ -46,11 +46,11 @@ export default function ProductModal({
           />
           <motion.div
             className="fixed bottom-0 left-0 right-0 mx-auto w-full max-w-lg bg-white rounded-t-[24px] z-50"
-            style={{ height: '65vh', maxHeight: '700px' }}
-            initial={{ y: '100%' }}
+            style={{ height: "65vh", maxHeight: "700px" }}
+            initial={{ y: "100%" }}
             animate={{ y: 0 }}
-            exit={{ y: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            exit={{ y: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
           >
             <div className="p-6 h-full overflow-auto">
               <div className="relative w-full h-48 mb-4">
