@@ -2,6 +2,8 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import PaymentMethodModal from "./PaymentMethodModal";
+import { useCartStore } from "@/store/useCartStore";
+import { useOrderStore } from "@/store/useOrderStore";
 
 interface CartSummaryProps {
   subtotal: number;
@@ -16,17 +18,18 @@ export default function CartSummary({
   tax,
   total,
 }: CartSummaryProps) {
+  const { clearCart, items } = useCartStore();
+  const { setOrder } = useOrderStore();
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
 
   const handlePaymentConfirm = async (paymentId: string) => {
     setIsProcessing(true);
-
+    setOrder(items, subtotal, serviceCharge, tax, total);
     await new Promise((resolve) => setTimeout(resolve, 5000));
-
     router.push("/bill");
+    clearCart();
   };
 
   return (

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="200" height="200">
+  <style>
+    .receipt { fill: #ff6b35; opacity: 0.8; }
+    .lines { fill: #ff8255; }
+  </style>
+  <path class="receipt" d="M4 2h16c1.1 0 2 .9 2 2v16c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2zm0 2v16h16V4H4z"/>
+  <path class="lines" d="M7 8h10v1H7zm0 3h10v1H7zm0 3h6v1H7z"/>
+  <path class="receipt" d="M6 17h12v2H6z"/>
+</svg>
