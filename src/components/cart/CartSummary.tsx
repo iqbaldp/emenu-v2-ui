@@ -1,3 +1,7 @@
+import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import PaymentMethodModal from "./PaymentMethodModal";
+
 interface CartSummaryProps {
   subtotal: number;
   serviceCharge: number;
@@ -11,6 +15,12 @@ export default function CartSummary({
   tax,
   total,
 }: CartSummaryProps) {
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+
+  const handlePaymentConfirm = (paymentId: string) => {
+    console.log(`Processing payment with ${paymentId}`);
+  };
+
   return (
     <div className="bg-white mt-5">
       <div className="h-px bg-gray-100 my-4"></div>
@@ -35,6 +45,7 @@ export default function CartSummary({
           </span>
         </div>
         <button
+          onClick={() => setIsPaymentModalOpen(true)}
           className="w-full bg-[#ff6b35] text-white py-4 rounded-xl font-semibold
             hover:bg-[#ff8255] transition-colors duration-200 shadow-lg
             active:transform active:scale-[0.98] transform duration-200"
@@ -42,6 +53,14 @@ export default function CartSummary({
           Bayar
         </button>
       </div>
+
+      <AnimatePresence>
+        <PaymentMethodModal
+          isOpen={isPaymentModalOpen}
+          onClose={() => setIsPaymentModalOpen(false)}
+          onConfirm={handlePaymentConfirm}
+        />
+      </AnimatePresence>
     </div>
   );
 }
