@@ -9,6 +9,7 @@ export const paymentMethods: PaymentMethod[] = [
   { id: "ovo", name: "OVO", type: "ewallet", icon: "💳" },
   { id: "gopay", name: "GoPay", type: "ewallet", icon: "💳" },
   { id: "dana", name: "Dana", type: "ewallet", icon: "💳" },
+  { id: "dana", name: "ShopeeyPay", type: "ewallet", icon: "💳" },
   { id: "mandiri", name: "Mandiri", type: "bank", icon: "🏦" },
   { id: "bca", name: "BCA", type: "bank", icon: "🏦" },
 ];

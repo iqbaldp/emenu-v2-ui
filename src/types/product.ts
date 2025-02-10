@@ -8,6 +8,10 @@ export interface Product {
   mustTry: boolean;
 }
 
+export interface CartItem extends Product {
+  quantity: number;
+}
+
 export interface ProductGridProps {
   products: Product[];
   activeCategory: string;
